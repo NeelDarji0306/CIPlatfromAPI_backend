@@ -1,5 +1,6 @@
 ﻿using Data_Access_Layer.Repository;
 using Data_Access_Layer.Repository.Entities;
+using Data_Access_Layer.Repository.Models;
 using System.Data;
 
 namespace Data_Access_Layer

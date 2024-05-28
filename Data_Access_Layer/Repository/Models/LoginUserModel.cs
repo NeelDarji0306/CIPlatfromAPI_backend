@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data_Access_Layer.Repository.Entities
+namespace Data_Access_Layer.Repository.Models
 {
     public class LoginUserModel
     {

@@ -1,5 +1,6 @@
 ﻿using Business_logic_Layer;
 using Data_Access_Layer.Repository.Entities;
+using Data_Access_Layer.Repository.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,6 +1,7 @@
 ﻿using Data_Access_Layer;
 using Data_Access_Layer.JWTService;
 using Data_Access_Layer.Repository.Entities;
+using Data_Access_Layer.Repository.Models;
 
 namespace Business_logic_Layer
 {
