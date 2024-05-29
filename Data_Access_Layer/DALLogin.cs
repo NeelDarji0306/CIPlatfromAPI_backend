@@ -113,5 +113,71 @@ namespace Data_Access_Layer
             }
             return userObj;
         }
+
+        public string Register(User user)
+        {
+            string result = string.Empty;
+            try
+            {
+                bool emailExists = _cIDbContext.User.Any(u => u.EmailAddress == user.EmailAddress && !u.IsDeleted);
+                if (!emailExists)
+                {
+                    string maxEmployeeIdStr = _cIDbContext.UserDetail.Max(ud => ud.EmployeeId);
+                    int maxEmployeeId = 0;
+                    if (!string.IsNullOrEmpty(maxEmployeeIdStr))
+                    {
+                        if(int.TryParse(maxEmployeeIdStr, out int parseEmployeeId))
+                        {
+                            maxEmployeeId = parseEmployeeId;
+                        }
+                        else
+                        {
+                            throw new Exception("Error while converting string to int.");
+                        }
+                    }
+                    int newEmployeeId = maxEmployeeId + 1;
+
+                    var newUser = new User
+                    {
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        PhoneNumber = user.PhoneNumber,
+                        EmailAddress = user.EmailAddress,
+                        Password = user.Password,
+                        UserType = user.UserType,
+                        CreatedDate = DateTime.UtcNow,
+                        IsDeleted = false
+                    };
+                    _cIDbContext.User.Add(newUser);
+                    _cIDbContext.SaveChanges();
+                    var newUserDetail = new UserDetail
+                    {
+                        UserId = newUser.Id,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        PhoneNumber = user.PhoneNumber,
+                        EmailAddress = user.EmailAddress,
+                        UserType = user.UserType,
+                        Name = user.FirstName,
+                        Surname = user.LastName,
+                        EmployeeId = newEmployeeId.ToString(),
+                        Department = "IT",
+                        Status = true
+                    };
+                    _cIDbContext.UserDetail.Add(newUserDetail);
+                    _cIDbContext.SaveChanges();
+                    result = "User Registered";
+                    
+                }
+                else
+                {
+                    throw new Exception("email already registered");
+                }
+                return result;
+            }catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
+        }
     }
 }
